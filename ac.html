@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html ng-app="test">
+<head>
+    <title>test</title>
+</head>
+<body>
+ 
+    <table ng-controller="AlbumController" border="1">
+        <tr>
+            <td>挂号id</td>
+            <td>患者姓名</td>
+            <td>患者年纪</td>
+            <td>科室</td>
+            <td>预约医生</td>
+            <td>预约时间</td>
+            <td>是否诊疗</td>
+        </tr>
+        <tr ng-repeat="i in newData  | orderBy:'applyDate'" style={{i.style}}>
+            <td>{{i.applyDocID}}</td>
+            <td>{{i.applyDocName}}</td>
+            <td>{{i.age}}</td>
+            <td>{{i.applyDept}}</td>
+            <td>{{i.applyDoctor}}</td>
+            <td>{{i.applyDate  | date:'yyyy-MM-dd'}}</td>
+            <td>{{i.consultState}}</td>
+        </tr>
+    <table>
+    <!--换成你本地引用路径-->
+    <script type="text/javascript" src="../lib/angular.min.js"></script>
+    <script>
+        var app = angular.module('test', []);
+ 
+        app.controller('AlbumController', function($scope){
+ 
+            $scope.Ablum = [
+                [
+                    {
+                        applyDocID: "000",
+                        applyDocName: "admin",
+                        applyTime: 1359437471000,
+                        consultState: 1,
+                        consultTime: 1356437471000
+                    },
+                    {
+                        admissionNo: "13210020",
+                        adviceID: "126314923",
+                        age: 48,
+                        applyDate: 1356264671000,
+                        applyDept: "外科",
+                        applyDoctor: "华佗"
+                    },
+                ],
+                [
+                    {
+                        applyDocID: "002",
+                        applyDocName: "admin2",
+                        applyTime: 1356437592000,
+                        consultState: 0,
+                        consultTime: 1356437471000
+                    },
+                    {
+                        admissionNo: "13210028",
+                        adviceID: "126314993",
+                        age: 55,
+                        applyDate: 1356464689000,
+                        applyDept: "外科2",
+                        applyDoctor: "华佗5"
+                    },
+                ],
+                [
+                    {
+                        applyDocID: "003",
+                        applyDocName: "admin2",
+                        applyTime: 1356437592000,
+                        consultState: 0,
+                        consultTime: 1356437471000
+                    },
+                    {
+                        admissionNo: "13210028",
+                        adviceID: "126314993",
+                        age: 55,
+                        applyDate: 1356764689000,
+                        applyDept: "外科2",
+                        applyDoctor: "华佗4"
+                    },
+                ],
+                [
+                    {
+                        applyDocID: "005",
+                        applyDocName: "admin2",
+                        applyTime: 1356437592000,
+                        consultState: 1,
+                        consultTime: 1356437471000
+                    },
+                    {
+                        admissionNo: "13210028",
+                        adviceID: "126314993",
+                        age: 55,
+                        applyDate: 1496264629000,
+                        applyDept: "外科2",
+                        applyDoctor: "华佗8"
+                    },
+                ]
+            ];
+            $scope.newData = contactData($scope.Ablum);
+        console.log($scope.newData);
+ 
+        });
+        function contactObj(obj1, obj2){
+            for(i in obj1){
+                obj2[i] = obj1[i];
+            }
+            return obj2;
+        }
+ 
+        //重新处理数据，整体数据看下来感觉没必要做成一个二维数组,变成一维数组
+        function contactData(data){
+            var arr = [];
+            for(var i=0; i<data.length; i++){
+                if(data[i][0].consultState === 1){
+                    data[i][0].style = "background:red";
+                }
+                arr.push(contactObj(data[i][0],data[i][1]));
+            }
+            return arr;
+        }
+    </script>
+</body>
+</html>
